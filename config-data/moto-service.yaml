@@ -1,9 +1,26 @@
+#============** Port Server **============#
+server:
+  port: 8003
+
+#============** Eureka **============#
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      default-zone: http://localhost:8761/eureka
+    instance:
+      hostmane: localhost
+
+#============** Spring DataSource **============#
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     url: jdbc:mysql://localhost:3306/moto?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false
     password: admin
+
+#============** Spring Jpa **============#
   jpa:
     properties:
       hibernate:
@@ -11,8 +28,4 @@ spring:
     database: mysql
     hibernate:
       ddl-auto: update
-    show-sql: 'true'
-  #application:
-    #name: moto-service
-server:
-  port: '8003'
+    show-sql: true

@@ -1,15 +1,14 @@
 server:
-  port: 8081
-  
+  port: 8081 
 spring:
-  application:
-    name: config-service
-    
   cloud:
     config:
       server:
         git:
-          default-label: config-server   اسم الفرع االذي حملنا فيه الملف في GitHub
+          default-label: config-server
           uri: https://github.com/Baya91/Cour_Microservice_Es
-          search-paths: config-data  
-      
+          search-paths: config-data
+  application:
+    name: config-service   
+            
+  
