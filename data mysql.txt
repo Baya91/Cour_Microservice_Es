@@ -1,0 +1,128 @@
+********************
+usario
+  @Post  // http://localhost:8001/usuario
+
+{
+    "id":"1",
+    "nombre":"user1",
+    "email":"email1@gmail.com"
+////////////////////////////////
+    "id":"2",
+    "nombre":"user2",
+    "email":"email2@gmail.com"
+////////////////////////////////
+    "id":"3",
+    "nombre":"user3",
+    "email":"email3@gmail.com"
+////////////////////////////////
+    "id":"4",
+    "nombre":"user4",
+    "email":"email4@gmail.com"
+  "email":"bayassin@gmail.com"
+}
+
+***************************************************
+carro
+ @Post http://localhost:8002/carro/
+
+{
+    "id":"1",
+    "marca":"CaroMar1",
+    "modelo":"CaroMod1",
+    "usuarioId":"1"
+////////////////////////////////
+    "id":"2",
+    "marca":"CaroMar2",
+    "modelo":"CaroMod2",
+    "usuarioId":"2"
+////////////////////////////////
+    "id":"3",
+    "marca":"CaroMar3",
+    "modelo":"CaroMod3",
+    "usuarioId":"2"
+////////////////////////////////
+    "id":"4",
+    "marca":"CaroMar4",
+    "modelo":"CaroMod4",
+    "usuarioId":"3"
+////////////////////////////////
+    "id":"5",
+    "marca":"CaroMar5",
+    "modelo":"CaroMod5",
+    "usuarioId":"3"
+////////////////////////////////
+    "id":"6",
+    "marca":"CaroMar6",
+    "modelo":"CaroMod6",
+    "usuarioId":"3"
+////////////////////////////////
+    "id":"7",
+    "marca":"CaroMar7",
+    "modelo":"CaroMod7",
+    "usuarioId":"4"
+////////////////////////////////
+    "id":"8",
+    "marca":"CaroMar8",
+    "modelo":"CaroMod8",
+    "usuarioId":"1"
+////////////////////////////////
+    "id":"9",
+    "marca":"CaroMar9",
+    "modelo":"CaroMod9",
+    "usuarioId":"3"
+////////////////////////////////
+
+}
+
+***************************************************
+Moto
+ @Post http://localhost:8003/moto/
+
+{
+    "id":"1",
+    "marca":"MoMar1",
+    "modelo":"MoMod1",
+    "usuarioId":"1"
+////////////////////////////////
+    "id":"2",
+    "marca":"MoMar2",
+    "modelo":"MoMod2",
+    "usuarioId":"2"
+////////////////////////////////
+    "id":"3",
+    "marca":"MoMar3",
+    "modelo":"MoMod3",
+    "usuarioId":"2"
+////////////////////////////////
+    "id":"4",
+    "marca":"MoMar4",
+    "modelo":"MoMod4",
+    "usuarioId":"3"
+////////////////////////////////
+    "id":"5",
+    "marca":"MoMar5",
+    "modelo":"MoMod5",
+    "usuarioId":"3"
+////////////////////////////////
+    "id":"6",
+    "marca":"MoMar6",
+    "modelo":"MoMod6",
+    "usuarioId":"3"
+////////////////////////////////
+    "id":"7",
+    "marca":"MoMar7",
+    "modelo":"MoMod7",
+    "usuarioId":"4"
+////////////////////////////////
+    "id":"8",
+    "marca":"MoMar8",
+    "modelo":"MoMod8",
+    "usuarioId":"1"
+////////////////////////////////
+    "id":"9",
+    "marca":"MoMar9",
+    "modelo":"MoMod9",
+    "usuarioId":"3"
+////////////////////////////////
+
+}
