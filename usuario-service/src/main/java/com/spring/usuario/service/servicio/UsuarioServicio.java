@@ -18,6 +18,7 @@ public interface UsuarioServicio {
 
     /****************************code Microservice Carro/****************************/
     public Carro saveCarro(Long usuarioId, Carro carro);
+    public List<Carro> getCarros(Long usuarioId) ;
 
     /****************************code Microservice Moto/****************************/
     public Moto saveMoto(Long usuarioId, Moto moto);

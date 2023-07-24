@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.spring.usuario.service.modelos.Moto;
 
-@FeignClient(name = "moto-service", url = "localhost:8003")
+@FeignClient(name = "moto-service")
 public interface MotoFeignClient {
 
     @PostMapping("/moto")

@@ -27,6 +27,10 @@ public class UsuarioServicioImpl implements UsuarioServicio {
         carro.setUsuarioId(usuarioId);
         return this.carroFeignClient.save(carro);
     }
+    @Override
+    public List<Carro> getCarros(Long usuarioId) {
+        return this.carroFeignClient.getCarrosByUsuario(usuarioId);
+    }
 
     /****************************code Microservice Moto/****************************/
     @Autowired

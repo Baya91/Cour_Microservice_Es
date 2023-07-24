@@ -1,8 +1,8 @@
-#============** Port Server **============#
+#===============================** Port Server **===============================#
 server:
   port: ${PORT:${SERVER_PORT:0}}
 
-#============** Eureka **============#
+#===============================** Eureka **===============================#
 eureka:
   client:
     fetch-registry: true
@@ -12,7 +12,38 @@ eureka:
     instance:
       instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 
-#============** Spring DataSource **============#
+#===============================** resilience4j **===============================#
+resilience4j.circuitbreaker:
+    instances:
+        carrosCB:   # c est un exemple class Carros , CB = circuit breaker alfaaaaaaaaaaaa
+            registerHealthIndicator: true
+            slidingWindowSize: 10
+            permittedNumberOfCallsInHalfOpenState: 3
+            slidingWindowType: TIME_BASED
+            minimumNumberOfCalls: 4
+            waitDurationInOpenState: 5s
+            failureRateThreshold: 50
+            eventConsumerBufferSize: 10
+        motosCB: # c est un exemple class Carros , CB = circuit breaker  alfaaaaaaaaaaaa
+            registerHealthIndicator: true
+            slidingWindowSize: 10
+            permittedNumberOfCallsInHalfOpenState: 3
+            slidingWindowType: TIME_BASED
+            minimumNumberOfCalls: 4
+            waitDurationInOpenState: 5s
+            failureRateThreshold: 50
+            eventConsumerBufferSize: 10    
+        todosCB:
+            registerHealthIndicator: true
+            slidingWindowSize: 10
+            permittedNumberOfCallsInHalfOpenState: 3
+            slidingWindowType: TIME_BASED
+            minimumNumberOfCalls: 4
+            waitDurationInOpenState: 5s
+            failureRateThreshold: 50
+            eventConsumerBufferSize: 10  
+          
+#===============================** Spring DataSource **===============================#
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -20,7 +51,7 @@ spring:
     url: jdbc:mysql://localhost:3306/usuario?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false
     password: admin
 
-#============** Spring Jpa **============#
+#===============================** Spring Jpa **===============================#
   jpa:
     properties:
       hibernate:
