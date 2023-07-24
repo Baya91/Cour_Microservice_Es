@@ -1,6 +1,6 @@
 #============** Port Server **============#
 server:
-  port: 8003
+  port: ${PORT:${SERVER_PORT:0}}
 
 #============** Eureka **============#
 eureka:
@@ -10,8 +10,7 @@ eureka:
     service-url:
       default-zone: http://localhost:8761/eureka
     instance:
-      hostmane: localhost
-
+      instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 #============** Spring DataSource **============#
 spring:
   datasource:
