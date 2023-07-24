@@ -5,7 +5,7 @@ spring:
     config:
       server:
         git:
-          default-label: eurea-server
+          default-label: Gateway
           uri: https://github.com/Baya91/Cour_Microservice_Es
           search-paths: config-data
   application:
