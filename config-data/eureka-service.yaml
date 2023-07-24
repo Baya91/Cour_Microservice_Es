@@ -6,5 +6,5 @@ server:
 eureka:
   client:
     fetch-registry: false
-    register-with-eureka: flase
+    register-with-eureka: false
     
