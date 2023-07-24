@@ -41,7 +41,7 @@ public class UsarioController {
     }
 
     @CircuitBreaker(name = "carrosCB", fallbackMethod = "fallBackGetCarros")
-    @GetMapping("motos_by_usuario/{usuarioId}") //  http://localhost:8001/usuario/motos_by_usuario/**
+    @GetMapping("carros_by_usuario/{usuarioId}") //  http://localhost:8001/usuario/motos_by_usuario/**
     public ResponseEntity<List<Carro>> listaCarrosbyUsuario(
                     @PathVariable Long usuarioId) {
         List<Carro> carros = this.usuarioService.getCarros(usuarioId);
