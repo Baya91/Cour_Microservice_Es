@@ -18,6 +18,6 @@ public interface CarroFeignClient {
     @PostMapping("/carro")
     public Carro save(@RequestBody Carro carro);
 
-    @GetMapping("/carro")
-    public List<Carro> getCarrosByUsuario(@PathVariable Long usuarioId);
+    @GetMapping("/carro/usuario/{usuarioId}")
+    public List<Carro> getCarrosByUsuario(@PathVariable("usuarioId") Long usuarioId);
 }

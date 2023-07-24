@@ -41,19 +41,23 @@ public class UsarioController {
     }
 
     @CircuitBreaker(name = "carrosCB", fallbackMethod = "fallBackGetCarros")
-    @GetMapping("carros_by_usuario/{usuarioId}") //  http://localhost:8001/usuario/motos_by_usuario/**
-    public ResponseEntity<List<Carro>> listaCarrosbyUsuario(
-                    @PathVariable Long usuarioId) {
+    @GetMapping("carros_by_usuario/{usuarioId}") //  http://localhost:8001/usuario/carros_by_usuario/**
+    public ResponseEntity<List<Carro>> listaCarrosbyUsuario( @PathVariable("usuarioId") Long usuarioId) {
         List<Carro> carros = this.usuarioService.getCarros(usuarioId);
         if (carros.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(carros);
     }
+    private ResponseEntity<List<Carro>> fallBackGetCarros(RuntimeException exepion) {
+        return new ResponseEntity(
+                        "El usuario : tiene diniero para los carros",
+                        HttpStatus.OK);
+    }
 
     /****************************code Microservice Moto/****************************/
 
-    @CircuitBreaker(name = "moto sCB", fallbackMethod = "fallBacksetMotos")
+    @CircuitBreaker(name = "motosCB", fallbackMethod = "fallBacksetMotos")
     @PostMapping("set_moto/{usuarioId}") //  http://localhost:8001/usuario/set_moto/**
     public ResponseEntity<Moto> guardarMoto(@PathVariable("usuarioId") Long usuarioId,
                     @RequestBody Moto moto) {
@@ -84,42 +88,33 @@ public class UsarioController {
 
     /****************************Methode  ====== Circuit Bareaker ====== ****************************/
 
-    public ResponseEntity<Carro> fallBacksetCarros(
-                    @PathVariable("usuarioId") Long usuarioId, RuntimeException cc) {
-        return new ResponseEntity(
-                        "El usuario : " + usuarioId + " tiene los carros en el talle",
-                        HttpStatus.OK);
-    }
-
-    public ResponseEntity<List<Carro>> fallBackGetCarros(@PathVariable Long usuarioId) {
-        return new ResponseEntity(
-                        "El usuario : " + usuarioId + " tiene diniero para los carros",
-                        HttpStatus.OK);
-    }
-
-    public ResponseEntity<Moto> fallBacksetMotos(
-                    @PathVariable("usuarioId") Long usuarioId, @RequestBody Moto moto) {
+  
+   
+    
+    private ResponseEntity<Moto> fallBacksetMotos(
+                    @PathVariable("usuarioId") Long usuarioId, @RequestBody Moto moto, @RequestBody Moto moto) {
         return new ResponseEntity(
                         "El usuario : " + usuarioId + " tiene los motos en el talle",
                         HttpStatus.OK);
     }
 
-    public ResponseEntity<List<Moto>> fallBackGetMotos(@PathVariable Long usuarioId) {
+    private ResponseEntity<List<Moto>> fallBackGetMotos(@PathVariable("usuarioId") Long usuarioId,RuntimeException exepion) {
         return new ResponseEntity(
                         "El usuario : " + usuarioId + " tiene diniero para los motos",
                         HttpStatus.OK);
     }
 
-    public ResponseEntity<Map<String, Object>> fallBackGetTodos(
-                    @PathVariable Long usuarioId) {
+    private ResponseEntity<Map<String, Object>> fallBackGetTodos(
+                    @PathVariable("usuarioId") Long usuarioId, @RequestBody Moto moto) {
         return new ResponseEntity(
                         "El usuario : " + usuarioId + " tiene los vhiecolos en el talle",
                         HttpStatus.OK);
     }
+   
 
     /****************************code Usuario/****************************/
-
-    @GetMapping //  http://localhost:8001/usuario
+ //  http://localhost:8001/usuario
+    @GetMapping
     public ResponseEntity<List<Usuario>> listarUsuarios() {
         List<Usuario> usuarios = usuarioService.getAll();
         if (usuarios.isEmpty()) {
