@@ -1,11 +1,11 @@
 server:
-  port: 8081 
+  port: 8081
 spring:
   cloud:
     config:
       server:
         git:
-          default-label: circuit-breaker
+          default-label: zipkin-sleuth
           uri: https://github.com/Baya91/Cour_Microservice_Es
           search-paths: config-data
   application:
