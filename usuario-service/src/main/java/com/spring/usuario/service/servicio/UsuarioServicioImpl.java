@@ -18,7 +18,28 @@ import com.spring.usuario.service.repositorio.UsuarioRepository;
 @Service
 public class UsuarioServicioImpl implements UsuarioServicio {
 
-    /****************************code Microservice Carro/****************************/
+	
+	
+	 /****************************code Microservice avec RestTemplate/****************************/
+    @Autowired
+	private RestTemplate restTemplate;
+    
+    @Override    //  getCarros avec RestTemplate
+	public List<Carro> getCarros(Long usuarioId) {
+		List<Carro> carros = restTemplate.getForObject("http://carro-service/carro/usuario/"+usuarioId, List.class);
+		return carros;
+	}
+
+    @Override //  getMotos avec RestTemplate
+	public List<Moto> getMotos(Long usuarioId) {
+		List<Moto> motos = restTemplate.getForObject("http://moto-service/moto/usuario/" + usuarioId, List.class);
+		return motos;
+	}
+	
+	
+	
+	
+    /****************************code Microservice avec Feign  Carro/****************************/
     @Autowired
     private CarroFeignClient carroFeignClient;
 
@@ -27,12 +48,14 @@ public class UsuarioServicioImpl implements UsuarioServicio {
         carro.setUsuarioId(usuarioId);
         return this.carroFeignClient.save(carro);
     }
-    @Override
+    
+    /*
+    @Override    //  getCarros avec Fiegn
     public List<Carro> getCarros(Long usuarioId) {
         return this.carroFeignClient.getCarrosByUsuario(usuarioId);
     }
-
-    /****************************code Microservice Moto/****************************/
+/*
+    /****************************code Microservice avec Feign  Moto/****************************/
     @Autowired
     private MotoFeignClient motoFeignClient;
     @Override
@@ -41,10 +64,10 @@ public class UsuarioServicioImpl implements UsuarioServicio {
         return this.motoFeignClient.save(moto);
     }
 
-    @Override
+  /* @Override //  getMotos avec Fiegn
     public List<Moto> getMotos(Long usuarioId) {
         return this.motoFeignClient.getMotosByUsuario(usuarioId);
-    }
+    }*/
 
     /**************************** Get Todos ****************************/
     @Override
@@ -79,11 +102,15 @@ public class UsuarioServicioImpl implements UsuarioServicio {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    
+
+    
     @Override
     public List<Usuario> getAll() {
         return usuarioRepository.findAll();
     }
 
+    
     @Override
     public Usuario getUsuarioById(Long id) {
         return usuarioRepository.findById(id).orElse(null);

@@ -19,6 +19,8 @@ import org.springframework.web.client.RestTemplate;
 import com.spring.usuario.service.entidades.Usuario;
 import com.spring.usuario.service.modelos.Carro;
 import com.spring.usuario.service.modelos.Moto;
+import com.spring.usuario.service.off_line.NoInternetConnectionException;
+import com.spring.usuario.service.off_line.PageOfLineALFAAAAAAAAAAAAAA;
 import com.spring.usuario.service.servicio.UsuarioServicio;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
@@ -26,9 +28,13 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 @RestController
 @RequestMapping("/usuario")
 public class UsarioController {
+	
 
     @Autowired
     private UsuarioServicio usuarioService;
+    
+    @Autowired
+    private PageOfLineALFAAAAAAAAAAAAAA alfa;
 
     /****************************code Microservice Carro/****************************/
 
@@ -36,6 +42,7 @@ public class UsarioController {
     @PostMapping("set_carro/{usuarioId}") //  http://localhost:8001/usuario/set_carro/**
     public ResponseEntity<Carro> guardarCarro(@PathVariable("usuarioId") Long usuarioId,
                     @RequestBody Carro carro) {
+    	
         Carro carroNuevo = this.usuarioService.saveCarro(usuarioId, carro);
         return ResponseEntity.ok(carroNuevo);
     }
@@ -50,6 +57,7 @@ public class UsarioController {
     @CircuitBreaker(name = "carrosCB", fallbackMethod = "fallBackGetCarros")
     @GetMapping("carros_by_usuario/{usuarioId}") //  http://localhost:8001/usuario/carros_by_usuario/**
     public ResponseEntity<List<Carro>> listaCarrosbyUsuario( @PathVariable("usuarioId") Long usuarioId) {
+    	
         List<Carro> carros = this.usuarioService.getCarros(usuarioId);
         if (carros.isEmpty()) {
             return ResponseEntity.noContent().build();
@@ -72,9 +80,16 @@ public class UsarioController {
         return ResponseEntity.ok(motoNuevo);
     }
 
+    
+    
+
     @CircuitBreaker(name = "motosCB", fallbackMethod = "fallBackGetMotos")
     @GetMapping("motos_by_usuario/{usuarioId}") //  http://localhost:8001/usuario/motos_by_usuario/**
     public ResponseEntity<List<Moto>> listaMotosbyUsuario(@PathVariable Long usuarioId) {
+    	if (!alfa.isInternetConnected()) {
+    		
+            return new ResponseEntity("خطأ: لا يوجد اتصال بالإنترنت",HttpStatus.SERVICE_UNAVAILABLE);
+        }
         List<Moto> motos = this.usuarioService.getMotos(usuarioId);
         if (motos.isEmpty()) {
             return ResponseEntity.noContent().build();
@@ -121,6 +136,7 @@ public class UsarioController {
 
     /****************************code Usuario/****************************/
  //  http://localhost:8001/usuario
+    @CircuitBreaker(name = "carrosCB",fallbackMethod = "fallBackGetUsuarios")
     @GetMapping
     public ResponseEntity<List<Usuario>> listarUsuarios() {
         List<Usuario> usuarios = usuarioService.getAll();
@@ -129,9 +145,16 @@ public class UsarioController {
         }
         return ResponseEntity.ok(usuarios);
     }
-
+    private ResponseEntity<List<Carro>> fallBackGetUsuarios(RuntimeException exepion) {
+        return new ResponseEntity(
+                        "El usuario : tiene diniero para los carros",
+                        HttpStatus.OK);
+    }
     @GetMapping("/{id}") //   http://localhost:8001/usuario/**
     public ResponseEntity<Usuario> obtenerUsuario(@PathVariable("id") Long id) {
+    	if (!alfa.isInternetConnected()) {
+            return new ResponseEntity("خطأ: لا يوجد اتصال بالإنترنت",HttpStatus.SERVICE_UNAVAILABLE);
+        }
         Usuario usuario = usuarioService.getUsuarioById(id);
         if (usuario == null) {
             return ResponseEntity.notFound().build();
@@ -139,7 +162,7 @@ public class UsarioController {
         return ResponseEntity.ok(usuario);
     }
 
-    @PostMapping // http://localhost:8001/usuario
+    @PostMapping("set_usuario") // http://localhost:8001/usuario/set_usuario
     public ResponseEntity<Usuario> guardarUsuario(@RequestBody Usuario usuario) {
         Usuario nuevoUsuario = usuarioService.save(usuario);
         return ResponseEntity.ok(nuevoUsuario);
