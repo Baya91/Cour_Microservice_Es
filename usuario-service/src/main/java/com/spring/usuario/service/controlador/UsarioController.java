@@ -39,6 +39,13 @@ public class UsarioController {
         Carro carroNuevo = this.usuarioService.saveCarro(usuarioId, carro);
         return ResponseEntity.ok(carroNuevo);
     }
+    
+    private ResponseEntity<Carro> fallBacksetCarros(RuntimeException exepion) {
+        return new ResponseEntity(
+                        "El usuario : tiene diniero para los carros",
+                        HttpStatus.OK);
+    }
+    
 
     @CircuitBreaker(name = "carrosCB", fallbackMethod = "fallBackGetCarros")
     @GetMapping("carros_by_usuario/{usuarioId}") //  http://localhost:8001/usuario/carros_by_usuario/**
@@ -92,7 +99,7 @@ public class UsarioController {
    
     
     private ResponseEntity<Moto> fallBacksetMotos(
-                    @PathVariable("usuarioId") Long usuarioId, @RequestBody Moto moto, @RequestBody Moto moto) {
+                    @PathVariable("usuarioId") Long usuarioId, @RequestBody Moto moto) {
         return new ResponseEntity(
                         "El usuario : " + usuarioId + " tiene los motos en el talle",
                         HttpStatus.OK);
